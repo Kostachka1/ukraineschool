@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Винаходи українців у IT — Гордість Нації 1950–2026</title>
+    <meta name="description" content="Повна енциклопедія: від МЕСМ та ОГАС до Grammarly, Diia.AI, Reface та мільйонів користувачів. Найбільший український IT-сайт з фактами, фото, хронологією та джерелами">
+    <style>
+        :root {
+            --primary: #0052CC;
+            --accent: #00B2FF;
+            --dark: #0F172A;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: linear-gradient(135deg, #f0f4f8 0%, #e0e9f0 100%);
+            margin: 0;
+            transition: all 0.4s;
+        }
+        body:has(#theme-toggle:checked) {
+            --primary: #60A5FA;
+            --accent: #38BDF8;
+            background: linear-gradient(135deg, #1e2937, #0f172a);
+            color: #e2e8f0;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 3rem 1rem 2.5rem;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 82, 204, 0.4);
+        }
+        h1 { font-size: clamp(2.2rem, 9vw, 3.5rem); font-weight: 900; }
+        .subtitle { font-size: 1.25rem; opacity: 0.95; max-width: 800px; margin: 0 auto; }
+
+        /* NAV */
+        nav {
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        body:has(#theme-toggle:checked) nav { background: #1e2937; }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            position: relative;
+            gap: 15px;
+        }
+        .nav-menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-menu a {
+            padding: 14px 22px;
+            background: #f1f5f9;
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+        body:has(#theme-toggle:checked) .nav-menu a { background: #334155; }
+        .nav-menu a:hover { background: var(--primary); color: white; transform: translateY(-3px); }
+
+        /* БУРГЕР */
+        .burger-toggle { display: none; }
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            width: 36px;
+            cursor: pointer;
+        }
+        .burger span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+            transition: 0.3s;
+        }
+        @media (max-width: 899px) {
+            .burger { display: flex; }
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                padding-top: 3rem;
+                transition: 0.4s;
+            }
+            body:has(#theme-toggle:checked) .nav-menu { background: #1e2937; }
+            #burger-toggle:checked ~ .nav-menu { left: 0; }
+        }
+
+        /* ТЕМА */
+        .theme-toggle {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 52px;
+            height: 52px;
+            cursor: pointer;
+        }
+        .theme-toggle input { display: none; }
+        .slider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 52px;
+            height: 52px;
+            background: #f1f5f9;
+            border-radius: 50%;
+            font-size: 1.6rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: 0.4s;
+        }
+        body:has(#theme-toggle:checked) .slider { background: #334155; transform: rotate(360deg); }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        section {
+            background: white;
+            margin-bottom: 3rem;
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            scroll-margin-top: 90px;
+        }
+        body:has(#theme-toggle:checked) section { background: #1e2937; }
+
+        h2 {
+            color: var(--primary);
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            margin-bottom: 1.5rem;
+            border-bottom: 5px solid var(--accent);
+            padding-bottom: 0.8rem;
+            display: inline-block;
+        }
+
+        .card {
+            background: #f8fafc;
+            padding: 1.8rem;
+            border-radius: 16px;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+        .card:hover { transform: translateY(-8px); }
+        body:has(#theme-toggle:checked) .card { background: #334155; }
+
+        .highlight {
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 8px solid var(--accent);
+            margin: 2rem 0;
+            font-size: 1.1rem;
+        }
+        body:has(#theme-toggle:checked) .highlight { background: #334155; }
+
+        img {
+            width: 100%;
+            max-width: 280px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin: 1rem 0;
+            display: block;
+        }
+
+        /* ХРОНОЛОГІЯ */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: var(--accent);
+            border-radius: 10px;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -32px;
+            top: 8px;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border: 4px solid var(--primary);
+            border-radius: 50%;
+        }
+        body:has(#theme-toggle:checked) .timeline-item::before { background: #1e2937; }
+
+        .btn-source {
+            display: inline-block;
+            padding: 12px 26px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            margin: 15px 8px 0 0;
+            transition: all 0.3s;
+        }
+        .btn-source:hover {
+            background: var(--primary);
+            transform: translateY(-4px);
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            margin-top: 5rem;
+        }
+        body:has(#theme-toggle:checked) footer { background: #0f172a; }
+
+        @media (max-width: 768px) {
+            section { padding: 1.8rem 1.2rem; }
+            .card { padding: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Винаходи українців у IT</h1>
+        <p class="subtitle">Від першої електронної машини Європи (1950) до Diia.AI — першого національного ШІ-асистента у світі (2025). Найповніша енциклопедія українського генію в технологіях</p>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <input type="checkbox" id="burger-toggle" class="burger-toggle">
+            <label for="burger-toggle" class="burger">
+                <span></span><span></span><span></span>
+            </label>
+
+            <ul class="nav-menu">
+                <li><a href="#history">Історія</a></li>
+                <li><a href="#pioneers">Першопрохідці</a></li>
+                <li><a href="#timeline">Хронологія</a></li>
+                <li><a href="#computers">Комп'ютери та мережі</a></li>
+                <li><a href="#software">Програмне забезпечення</a></li>
+                <li><a href="#startups">Сучасні стартапи</a></li>
+                <li><a href="#diia">Diia — Держава у смартфоні</a></li>
+                <li><a href="#ai">Штучний інтелект</a></li>
+                <li><a href="#war">IT під час війни</a></li>
+                <li><a href="#gallery">Галерея</a></li>
+            </ul>
+
+            <label class="theme-toggle">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider">🌙</span>
+            </label>
+        </div>
+    </nav>
+
+    <main>
+        <!-- ІСТОРІЯ -->
+        <section id="history">
+            <h2>Історія українського IT</h2>
+            <p>Україна — один з найстаріших центрів комп'ютерної науки. У 1950 році в Києві Сергій Лебедєв створив <strong>МЕСМ</strong> — першу в континентальній Європі електронну цифрову машину. За радянських часів українські вчені випередили багато країн. Сьогодні Україна входить у топ-5 світу за кількістю IT-фахівців, а інвестиції в український tech перевищили $500 млн у 2025 році. Diia — це перший у світі цифровий паспорт з юридичною силою, а Diia.AI — перший національний ШІ-асистент для державних послуг.</p>
+            <div class="highlight">93% українських компаній використовують ШІ (2026). Україна — №2 в Європі за кількістю AI-компаній.</div>
+            <a href="https://uacomputing.com/stories/mesm/" target="_blank" class="btn-source">📖 Повна історія МЕСМ</a>
+        </section>
+
+        <!-- ПЕРШОПРОХІДЦІ -->
+        <section id="pioneers">
+            <h2>Першопрохідці</h2>
+            
+            <div class="card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Lebedev_S.A._%28portrait%29.jpg/800px-Lebedev_S.A._%28portrait%29.jpg" alt="Сергій Лебедєв">
+                <h3>Сергій Лебедєв (1902–1974)</h3>
+                <p>Творець МЕСМ — першої в Європі електронної машини (Київ, 1950). Виконувала 3000 операцій/сек. Розв’язувала задачі з ядерної фізики.</p>
+                <a href="https://uk.wikipedia.org/wiki/Лебедєв_Сергій_Олексійович" target="_blank" class="btn-source">Вікіпедія</a>
+            </div>
+
+            <div class="card">
+                <img src="https://kpi.ua/sites/default/files/glushkov.jpg" alt="Віктор Глушков">
+                <h3>Віктор Глушков (1923–1982)</h3>
+                <p>Батько кібернетики СРСР. Автор ОГАС — прообразу інтернету та «розумної держави». Заснував Інститут кібернетики в Києві.</p>
+                <a href="https://uk.wikipedia.org/wiki/Глушков_Віктор_Михайлович" target="_blank" class="btn-source">Вікіпедія</a>
+            </div>
+
+            <div class="card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7d/Kateryna_Yushchenko.jpg" alt="Катерина Ющенко">
+                <h3>Катерина Ющенко (1919–2001)</h3>
+                <p>Винайшла адресне програмування (1955) — основу сучасних вказівників у C++, Java, Python. Перша жінка-кібернетик світового рівня.</p>
+                <a href="https://uk.wikipedia.org/wiki/Ющенко_Катерина_Логвинівна" target="_blank" class="btn-source">Вікіпедія</a>
+            </div>
+
+            <div class="card">
+                <h3>Любомир Романків (1931–2024)</h3>
+                <p>Легенда IBM (родом з Жовкви). Винайшов тонкоплівкові магнітні головки для жорстких дисків — без нього не було б Apple та сучасних ПК. 67 патентів. У Залі слави США разом зі Стівом Джобсом.</p>
+                <a href="https://uk.wikipedia.org/wiki/Любомир_Романків" target="_blank" class="btn-source">Вікіпедія</a>
+            </div>
+        </section>
+
+        <!-- ХРОНОЛОГІЯ -->
+        <section id="timeline">
+            <h2>Хронологія українського IT</h2>
+            <div class="timeline">
+                <div class="timeline-item"><strong>1950</strong> — МЕСМ (Сергій Лебедєв, Київ)</div>
+                <div class="timeline-item"><strong>1955</strong> — Адресне програмування (Катерина Ющенко)</div>
+                <div class="timeline-item"><strong>1962</strong> — Інститут кібернетики та ОГАС (Віктор Глушков)</div>
+                <div class="timeline-item"><strong>1970-ті</strong> — Магнітні головки для HDD (Любомир Романків, IBM)</div>
+                <div class="timeline-item"><strong>1980-ті</strong> — Компакт-диски (В'ячеслав Петров)</div>
+                <div class="timeline-item"><strong>2009</strong> — Заснування Grammarly (кияни)</div>
+                <div class="timeline-item"><strong>2012</strong> — Ajax Systems (Одеса)</div>
+                <div class="timeline-item"><strong>2020</strong> — Запуск Diia та цифрового паспорта</div>
+                <div class="timeline-item"><strong>2025</strong> — Diia.AI — перший національний ШІ-асистент у світі</div>
+            </div>
+        </section>
+
+        <!-- КОМП'ЮТЕРИ ТА МЕРЕЖІ -->
+        <section id="computers">
+            <h2>Комп'ютери та мережі</h2>
+            <div class="card">
+                <h3>В'ячеслав Петров</h3>
+                <p>Харківський вчений — один з винахідників компакт-дисків (CD). Заснував Інститут проблем реєстрації інформації НАН України.</p>
+            </div>
+            <div class="card">
+                <h3>Леонард Кляйнрок (українське походження)</h3>
+                <p>Теоретичний батько інтернету. Розробив принцип пакетної комунікації — основу TCP/IP.</p>
+            </div>
+        </section>
+
+        <!-- ПРОГРАМНЕ ЗАБЕЗПЕЧЕННЯ -->
+        <section id="software">
+            <h2>Програмне забезпечення</h2>
+            <p>Адресна мова Ющенко стала основою сучасного програмування. Сьогодні українські розробники створюють інструменти, якими користується весь світ.</p>
+        </section>
+
+        <!-- СУЧАСНІ СТАРТАПИ -->
+        <section id="startups">
+            <h2>Сучасні українські стартапи, що змінили світ</h2>
+            
+            <div class="card">
+                <img src="https://www.grammarly.com/img/grammarly-logo.svg" alt="Grammarly" style="max-width:180px;">
+                <h3>Grammarly</h3>
+                <p>30+ млн користувачів щодня. Оцінка — мільярди доларів. Засновники — кияни.</p>
+                <a href="https://www.grammarly.com/" target="_blank" class="btn-source">Офіційний сайт</a>
+            </div>
+
+            <div class="card">
+                <h3>Ajax Systems</h3>
+                <p>Найбільший виробник охоронних систем Європи. 2+ млн об'єктів у 120 країнах. Створив «Повітряна тривога».</p>
+                <a href="https://ajax.systems/ua/" target="_blank" class="btn-source">Офіційний сайт</a>
+            </div>
+
+            <div class="card">
+                <h3>Reface</h3>
+                <p>AI для заміни облич у відео та мемах. Мільйони завантажень. Один з найпопулярніших AI-застосунків світу.</p>
+            </div>
+
+            <div class="card">
+                <h3>Petcube & MacPaw</h3>
+                <p>Petcube — розумні камери для тварин. MacPaw — CleanMyMac та Setapp (мільйони користувачів).</p>
+            </div>
+        </section>
+
+        <!-- Diia -->
+        <section id="diia">
+            <h2>Diia — Держава у смартфоні + Diia.AI</h2>
+            <img src="https://united24media.com/_next/image?url=https%3A%2F%2Fassets.united24media.com%2Fposts%2F2024%2F11%2Fover-20000-foreigners-secure-e-residence-permits-through-ukraines-diia-app-2624%2Fdiia-passport.jpg&w=1200&q=75" alt="Diia цифровий паспорт">
+            <p>22+ млн користувачів. Перша країна у світі, де цифровий паспорт має повну юридичну силу. Diia.AI (2025) — перший у світі національний ШІ-асистент для державних послуг. Визнаний рекордом Гіннеса та найкращим GovTech Європи.</p>
+            <a href="https://diia.gov.ua/" target="_blank" class="btn-source">Відкрити Diia</a>
+        </section>
+
+        <!-- ШІ -->
+        <section id="ai">
+            <h2>Штучний інтелект</h2>
+            <p>Глушков передбачив ШІ ще в 1960-х. Сьогодні українські AI-стартапи — лідери Європи. Багато українців працюють у OpenAI, Google, Meta.</p>
+            <div class="highlight">Diia.AI — перший у світі державний ШІ для послуг (2025).</div>
+        </section>
+
+        <!-- IT ПІД ЧАС ВІЙНИ -->
+        <section id="war">
+            <h2>IT під час війни 2022–2026</h2>
+            <p>Ajax створив «Повітряна тривога». Diia — eVidnovlennia, підтримка ЗСУ, військові облікові. Українські розробники захищають країну цифрово.</p>
+        </section>
+
+        <!-- ГАЛЕРЕЯ -->
+        <section id="gallery">
+            <h2>Галерея</h2>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Lebedev_S.A._%28portrait%29.jpg/800px-Lebedev_S.A._%28portrait%29.jpg" alt="Сергій Лебедєв">
+            <img src="https://kpi.ua/sites/default/files/glushkov.jpg" alt="Віктор Глушков">
+            <img src="https://united24media.com/_next/image?url=https%3A%2F%2Fassets.united24media.com%2Fposts%2F2024%2F11%2Fover-20000-foreigners-secure-e-residence-permits-through-ukraines-diia-app-2624%2Fdiia-passport.jpg&w=1200&q=75" alt="Diia">
+            <img src="https://www.grammarly.com/img/grammarly-logo.svg" alt="Grammarly" style="max-width:200px;">
+        </section>
+    </main>
+
+    <footer>
+        <p><b>Розробник:</b> КОНСТАНТИН<br>
+        Зроблено з ❤️ для України • Максимальна версія 2026<br>
+        Усі джерела — реальні посилання. Сайт повністю адаптивний та з темною темою.</p>
+    </footer>
+</body>
+</html>
